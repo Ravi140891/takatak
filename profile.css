@@ -1,0 +1,130 @@
+body {
+  background-color: #333;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #444;
+  padding: 10px;
+}
+
+#videos-btn, #logout-btn {
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#profile-section {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  padding: 20px;
+}
+
+#profile-picture-section {
+  width: 200px;
+  height: 200px;
+  margin-right: 20px;
+  position: relative;
+}
+
+#profile-picture {
+  width: 100%;
+  height: 100%;
+  background-color: #555;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  color: #fff;
+  cursor: pointer;
+}
+
+#profile-picture p:hover {
+  background-color: #666;
+}
+
+#profile-info-section {
+  width: calc(100% - 220px);
+  margin-bottom: 20px;
+}
+
+#name-section, #profile-id-section, #about-me-section {
+  margin-bottom: 20px;
+}
+
+#name-section label, #profile-id-section label, #about-me-section label {
+  font-size: 18px;
+}
+
+#name-input, #profile-id-input {
+  padding: 10px;
+  font-size: 18px;
+  width: 100%;
+}
+
+#about-me-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 18px;
+  resize: none;
+}
+
+#upload-video-section {
+  width: 100%;
+  text-align: center;
+}
+
+#upload-video-section label {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+#video-input {
+  padding: 10px;
+  font-size: 18px;
+}
+
+#video-gallery-section {
+  padding: 20px;
+  text-align: center;
+}
+
+#video-gallery-section h2 {
+  margin-bottom: 10px;
+}
+
+#video-gallery {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.video-thumbnail {
+  width: 200px;
+  height: 200px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+#profile-picture{
+  background-size: contain;
+  height: 200px;
+}
+#name-input:read-only, #profile-id-input:read-only, textarea:read-only{
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    padding: 10px;
+}
+
+.btn{
+    padding: 10px;
+}

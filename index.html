@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="index.js" defer></script>
+    <title>Taka Tak</title>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <nav>
+          <a class="home">Home</a>
+          <a class="login">Login</a>
+          <a class="signup">Sign Up</a>
+        </nav>
+      </header>
+      <main><h1>Taka Tak</h1></main>
+      <div class="signup-container form-container">
+        <form id="signup-form">
+          <label for="name">Name</label> <br />
+          <input type="text" id="name" /> <br />
+          <label for="email">Email</label> <br />
+          <input type="email" name="email" id="email" /> <br />
+          <label for="password">Password</label> <br />
+          <input type="password" name="password" id="password" /><br />
+          <label for="confirm-pass">Confirm Password</label><br />
+          <input type="text" name="confirm-pass" id="confirm-pass" /><br />
+          <input type="submit" value="Sign Up" />
+        </form>
+      </div>
+      <div class="sucess">
+        <p>Congratulations Account is created successfully</p>
+      </div>
+
+      <div class="login-container form-container">
+        <form class="login-form">
+          <label for="email">Email</label> <br />
+          <input type="email" name="email" class="email" /> <br />
+          <label for="password">Password</label> <br />
+          <input type="password" name="password" class="password" /><br />
+          <input type="submit" value="Login" />
+        </form>
+      </div>
+    </div>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-analytics.js";
+      import {
+        getAuth,
+        signInWithEmailAndPassword,
+        createUserWithEmailAndPassword,
+      } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-auth.js";
+      const firebaseConfig = {
+        apiKey: "AIzaSyCxrtc6gVzS6AF84S9bfMbAGvJgAFE_9Us",
+        authDomain: "takatak-clone.firebaseapp.com",
+        databaseURL:
+          "https://takatak-clone-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "takatak-clone",
+        storageBucket: "takatak-clone.appspot.com",
+        messagingSenderId: "697646605514",
+        appId: "1:697646605514:web:c714f72de599f679e3c033",
+        measurementId: "G-F2869GBQ29",
+      };
+
+      let success = document.querySelector(".sucess");
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const auth = getAuth(app);
+
+      // Signup form submission handler
+      const signupForm = document.getElementById("signup-form");
+      signupForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        // Get form values
+        let name = document.getElementById("name");
+        let email = document.getElementById("email");
+        let password = document.getElementById("password");
+        let confirmPass = document.getElementById("confirm-pass");
+
+        // Check if passwords match
+        if (password.value !== confirmPass.value) {
+          alert("Passwords do not match");
+          return;
+        }
+        // Use Firebase's createUserWithEmailAndPassword method to create a new user
+        createUserWithEmailAndPassword(auth, email.value, password.value)
+          .then((userCredential) => {
+			localStorage.setItem("userUID", userCredential.user.uid);
+            name.value = "";
+            email.value = "";
+            password.value = "";
+            confirmPass.value = "";
+            success.style.display = "block";
+            setTimeout(() => {
+              success.style.display = "none";
+            }, 2000);
+            // ...
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // ..
+            console.log(errorMessage);
+            alert(error);
+          });
+      });
+
+      function setLoggedIn() {
+        const currentValue = localStorage.getItem("loggedIn");
+        localStorage.setItem("loggedIn", "true");
+      }
+
+      // Login form submission handler
+      const loginForm = document.querySelector(".login-form");
+      loginForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        // Get form values
+        const email = loginForm["email"].value;
+        const password = loginForm["password"].value;
+        // Use Firebase's signInWithEmailAndPassword method to sign in the user
+        signInWithEmailAndPassword(auth, email, password)
+          .then((cred) => {
+			setLoggedIn();
+			localStorage.setItem("userUID", cred.user.uid);
+            window.location.href = "profile.html";
+          })
+          .catch((error) => {
+            // Handle any errors that may occur
+            console.error(error);
+            alert(error.message);
+          });
+      });
+    </script>
+  </body>
+</html>
